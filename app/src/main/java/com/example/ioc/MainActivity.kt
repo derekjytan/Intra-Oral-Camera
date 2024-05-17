@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     companion object { // Creating a static variable in Kotlin
         private const val CAMERA_REQUEST_CODE = 100
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,10 +43,7 @@ class MainActivity : AppCompatActivity() {
         btnCamera.setOnClickListener {
             openCamera()
         }
-
-
     }
-
     private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -56,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Camera not available.", Toast.LENGTH_SHORT).show()
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             val photo: Bitmap = data?.extras?.get("data") as Bitmap
