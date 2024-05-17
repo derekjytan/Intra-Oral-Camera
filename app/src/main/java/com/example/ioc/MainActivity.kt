@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             openCamera()
         }
 
+
     }
 
     private fun openCamera() {
