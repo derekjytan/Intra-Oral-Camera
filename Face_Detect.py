@@ -1,13 +1,17 @@
+##pip install opencv-python
+##pip install opencv-python-headless
+
+
 from tkinter import *
 from tkinter.ttk import *
 import numpy as np
 import time
-import picamera
-import picamera.array
-import RPi.GPIO as GPIO
+import picamera 
+import picamera.array #New
+import RPi.GPIO as GPIO 
 import io
 import datetime
-import cv2  # Import OpenCV
+import cv2  # Import OpenCV new
 
 # GPIO setup
 GPIO.setwarnings(False)
@@ -34,6 +38,7 @@ zoom = 1.0
 previewTime = 3
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+#new
 
 def centreWindow(w,h):
     x = 0
@@ -47,7 +52,7 @@ def preview():
     camera.video_stabilization = True
     camera.start_preview()
 
-def detect_faces():
+def detect_faces(): #new
     with picamera.array.PiRGBArray(camera) as stream:
         camera.capture(stream, format='bgr')
         image = stream.array
@@ -196,7 +201,7 @@ def still():
     strDT = dT.strftime("%d-%m-%y, %H-%M")
     camera.capture(f'/home/Jeffrey/Desktop/img{strDT}-{picCount:03d}.jpg')
     picCount += 1
-    detect_faces()
+    detect_faces() #new
 
 vidCount = 0
 def vid():
