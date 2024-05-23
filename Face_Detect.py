@@ -54,17 +54,22 @@ def preview():
 
 def detect_faces(): #new
     with picamera.array.PiRGBArray(camera) as stream:
-        camera.capture(stream, format='bgr')
-        image = stream.array
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        camera.capture(stream, format='bgr') #capture image in bgr for opencv
+        image = stream.array #convert to numpy array for image format
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) #convert to grayscale
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
-
-        for (x, y, w, h) in faces:
+#Detects faces in grayscale: scalefactor says size reduction, minneighbours says amount rects, minsize is smallest face size
+        for (x, y, w, h) in faces: #go through all detected faces and draw a square around it
             cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
-
+#image is the camera
+        #xy is top left
+        # xw yh is bottom right
+        #255 0 0 is color
+        #2 is thickness
+        
         # Display the image with detected faces
-        cv2.imshow('Face Detection', image)
-        cv2.waitKey(1)  # Show image for 1 ms
+        cv2.imshow('Face Detection', image) #show detected faces in window
+        cv2.waitKey(1)  # displays every 1ms
 
 def zoomIn():
     global zoom
