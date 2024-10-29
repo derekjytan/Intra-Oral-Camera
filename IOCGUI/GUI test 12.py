@@ -30,24 +30,27 @@ window['background']='#2e3136'
 wScreen = window.winfo_screenwidth()
 hScreen = window.winfo_screenheight()
 
+#initial values
 zoom = 1.0
 camSat = 0
 camContrast = 0
 camSharp = 0
 camBright=camera.brightness
 
-
+# start gui top left screen, extend full screen
 def centreWindow(wScreen,hScreen):
     x=0
     y=0
     window.geometry(f'{wScreen}x{hScreen}+{x}+{y}')
 
+# start camera display in a set window on the gui
 def preview():
     camera.preview_fullscreen = False
     camera.preview_window = (50,0,1500,1000) # SET DIMENSIONS
     camera.video_stabilization = True
     camera.start_preview()
 
+#0.5 to 1 zoom ability
 def zoomIn():
     global zoom
     if zoom >= 0.55:            
@@ -59,7 +62,7 @@ def zoomIn():
     camera.zoom = (0, 0, zoom, zoom)
     zoom_text.config(text=f'Zoom Level: x{zoom:.2f}')
     preview()
-    
+
 def zoomOut():
     global zoom
     if zoom <= 0.95:
@@ -75,7 +78,7 @@ def zoomOut():
     zoom_text.config(text=f'Zoom Level: x{zoom:.2f}')
     preview()
     
-
+# brightness up/down by 5
 def brightUp():
     if camera.brightness < 100:
         camera.brightness += 5
@@ -88,7 +91,7 @@ def brightDown():
     bright_text.config(text=f'Brightness: {camera.brightness}')
     preview()
 
-
+#saturdation up/down 25
 def satUp():
     if camera.saturation < 100:
         camera.saturation += 25
@@ -101,6 +104,7 @@ def satDown():
     saturation_text.config(text=f'Saturation: {camera.saturation}')
     preview()
 
+#contrast up/down 10
 def contrastUp():
     if camera.contrast < 100:
         camera.contrast += 10
@@ -113,6 +117,7 @@ def contrastDown():
     contrast_text.config(text=f'Contrast: {camera.contrast}')
     preview()
 
+#sharpness up/down 10
 def sharpUp():
     if camera.sharpness < 100:
         camera.sharpness += 10
@@ -125,6 +130,7 @@ def sharpDown():
     sharp_text.config(text=f'Sharpness: {camera.sharpness}')
     preview()
 
+# capture photo
 def still():
     camera.preview_fullscreen = False
     camera.preview_window = (170,-120,860,950)
@@ -133,15 +139,17 @@ def still():
     camera.stop_preview()
 
     temp_path = '/tmp/temp_image.jpg'
-    camera.capture(temp_path, use_video_port = True)
+    camera.capture(temp_path, use_video_port = True) #capture photo
     
-    wave_quantity = sensor.channel_630nm
+    wave_quantity = sensor.channel_630nm #check colour sensor fluorescence
     
     if wave_quantity > 150:
         circle.itemconfig(LED, fill='red')
     else :
         circle.itemconfig(LED, fill='green')
     window.update()
+
+    #indicate led
  
     save_path = filedialog.asksaveasfilename(
         title="Save Photo",
